@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tips — BB · Claude Code Best Practices</title>
+  <meta name="description" content="164+ tips for Claude Code — searchable by category, author, and difficulty. From Boris Cherny and the Claude Code community." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+          colors: { brand: { DEFAULT: '#D97757', hover: '#B85F47' } },
+        },
+      },
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    code { font-family: 'JetBrains Mono', monospace; }
+    .tip-card:hover { border-color: rgba(217,119,87,0.4); }
+    .filter-btn.active { background: rgba(217,119,87,0.1); color: #D97757; border-color: rgba(217,119,87,0.4); }
+    #sidebar { scrollbar-width: thin; }
+  </style>
+</head>
+<body class="bg-[#FAFAF9] dark:bg-[#09090B] text-[#18181B] dark:text-[#FAFAFA] min-h-screen">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 left-0 right-0 z-50 h-14 border-b border-[#E4E4E7] dark:border-zinc-800 bg-[#FAFAF9]/90 dark:bg-[#09090B]/90 backdrop-blur-sm flex items-center px-4 gap-4">
+    <a href="/" class="flex items-center gap-2 shrink-0 min-w-[220px]">
+      <span class="w-7 h-7 rounded bg-[#D97757] flex items-center justify-center text-white font-bold text-sm">BB</span>
+      <span class="font-semibold text-sm hidden sm:block">Boris Best</span>
+    </a>
+    <div class="flex-1 max-w-xl mx-auto">
+      <div class="relative">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg>
+        <input id="search" type="text" placeholder="Filter tips..." class="w-full pl-9 pr-4 py-1.5 text-sm rounded-md border border-[#E4E4E7] dark:border-zinc-700 bg-white dark:bg-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#D97757]/40 focus:border-[#D97757]" />
+      </div>
+    </div>
+    <div class="flex items-center gap-3 shrink-0">
+      <a href="https://github.com/shanraisshan/claude-code-best-practice" target="_blank" rel="noopener" class="hidden sm:flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-100">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        Source
+      </a>
+      <button id="theme-toggle" class="w-8 h-8 rounded-md flex items-center justify-center text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+        <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path stroke-linecap="round" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="pt-14 flex">
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="hidden md:flex flex-col fixed top-14 left-0 bottom-0 w-56 border-r border-[#E4E4E7] dark:border-zinc-800 bg-[#FAFAF9] dark:bg-[#09090B] overflow-y-auto p-4">
+      <nav class="flex flex-col gap-0.5">
+        <a href="/" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Home</a>
+        <div class="mt-3 mb-1 px-3 text-xs font-semibold text-zinc-400 uppercase tracking-wider">Content</div>
+        <a href="/tips" class="block px-3 py-1.5 rounded text-sm bg-orange-50 dark:bg-orange-950 text-[#D97757] font-medium">
+          <span class="flex items-center justify-between">Tips <span class="text-xs bg-[#D97757]/10 px-1.5 py-0.5 rounded font-mono">164</span></span>
+        </a>
+        <a href="/concepts" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Concepts</a>
+        <a href="/best-practices" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Best Practices</a>
+        <a href="/reports" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Reports</a>
+        <a href="/workflows" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Workflows</a>
+        <a href="/questions" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Questions</a>
+        <div class="mt-3 mb-1 px-3 text-xs font-semibold text-zinc-400 uppercase tracking-wider">Meta</div>
+        <a href="/authors" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Authors</a>
+        <a href="/about" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">About & Source</a>
+        <a href="/contact" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Contact</a>
+      </nav>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="md:ml-56 flex-1 min-w-0">
+      <div class="max-w-[860px] mx-auto px-6 py-8">
+
+        <!-- PAGE HEADER -->
+        <div class="mb-6">
+          <h1 class="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-1">Tips</h1>
+          <p class="text-sm text-zinc-500">164+ tips from the Claude Code community. Filter by category, author, or difficulty.</p>
+        </div>
+
+        <!-- FILTERS -->
+        <div class="mb-6 space-y-3">
+          <!-- Category filters -->
+          <div class="flex flex-wrap gap-1.5" id="cat-filters">
+            <button onclick="filterCat('all')" class="filter-btn active px-2.5 py-1 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 transition-colors">all</button>
+            <button onclick="filterCat('workflow')" class="filter-btn px-2.5 py-1 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 transition-colors">workflow</button>
+            <button onclick="filterCat('context')" class="filter-btn px-2.5 py-1 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 transition-colors">context</button>
+            <button onclick="filterCat('security')" class="filter-btn px-2.5 py-1 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 transition-colors">security</button>
+            <button onclick="filterCat('automation')" class="filter-btn px-2.5 py-1 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 transition-colors">automation</button>
+            <button onclick="filterCat('debugging')" class="filter-btn px-2.5 py-1 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 transition-colors">debugging</button>
+            <button onclick="filterCat('prompting')" class="filter-btn px-2.5 py-1 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 transition-colors">prompting</button>
+            <button onclick="filterCat('git')" class="filter-btn px-2.5 py-1 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 transition-colors">git</button>
+            <button onclick="filterCat('mcp')" class="filter-btn px-2.5 py-1 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 transition-colors">mcp</button>
+            <button onclick="filterCat('hooks')" class="filter-btn px-2.5 py-1 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 transition-colors">hooks</button>
+            <button onclick="filterCat('agentic')" class="filter-btn px-2.5 py-1 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 transition-colors">agentic</button>
+          </div>
+          <!-- Advanced filter -->
+          <div class="flex items-center gap-3">
+            <label class="flex items-center gap-1.5 text-xs text-zinc-500 cursor-pointer">
+              <input type="checkbox" id="nb-filter" class="accent-[#D97757]" onchange="filterNoBabysit()" />
+              <span>🚫👶 no-babysit only</span>
+            </label>
+            <span id="count-label" class="text-xs text-zinc-400 ml-auto">Showing <span id="count">20</span> tips</span>
+          </div>
+        </div>
+
+        <!-- TIPS LIST -->
+        <div id="tips-list" class="space-y-2">
+
+          <!-- TIP CARDS — representative sample from source repo categories -->
+
+          <article class="tip-card border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-4 bg-white dark:bg-zinc-900 transition-colors" data-cat="workflow" data-nb="true">
+            <div class="flex items-start justify-between gap-2">
+              <div class="flex-1">
+                <div class="flex flex-wrap gap-1.5 mb-2">
+                  <span class="text-xs font-mono bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 px-1.5 py-0.5 rounded">workflow</span>
+                  <span class="text-xs bg-red-50 dark:bg-red-950 text-red-500 px-1.5 py-0.5 rounded" title="Advanced — not recommended for beginners">🚫👶 no-babysit</span>
+                </div>
+                <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-1">Use <code class="text-xs bg-zinc-100 dark:bg-zinc-800 px-1 py-0.5 rounded font-mono">/clear</code> between unrelated tasks to prevent context contamination</p>
+                <p class="text-xs text-zinc-500 leading-relaxed">When switching to a completely different task, clearing the conversation prevents Claude from applying patterns or assumptions from the previous context.</p>
+              </div>
+            </div>
+            <div class="mt-3 flex items-center gap-1.5 text-xs text-zinc-400">
+              <span class="w-5 h-5 rounded-full bg-[#D97757]/20 text-[#D97757] flex items-center justify-center font-bold">B</span>
+              <a href="https://x.com/bcherny" target="_blank" rel="noopener" class="hover:text-[#D97757]">Boris Cherny</a>
+            </div>
+          </article>
+
+          <article class="tip-card border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-4 bg-white dark:bg-zinc-900 transition-colors" data-cat="context" data-nb="true">
+            <div class="flex flex-wrap gap-1.5 mb-2">
+              <span class="text-xs font-mono bg-orange-50 dark:bg-orange-950 text-orange-600 dark:text-orange-400 px-1.5 py-0.5 rounded">context</span>
+              <span class="text-xs bg-red-50 dark:bg-red-950 text-red-500 px-1.5 py-0.5 rounded">🚫👶 no-babysit</span>
+            </div>
+            <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-1">CLAUDE.md is auto-loaded — use it for persistent project context</p>
+            <p class="text-xs text-zinc-500 leading-relaxed">Put architecture notes, team conventions, and project-specific constraints in CLAUDE.md. Claude reads it automatically at session start without requiring you to paste it each time.</p>
+            <div class="mt-3 flex items-center gap-1.5 text-xs text-zinc-400">
+              <span class="w-5 h-5 rounded-full bg-[#D97757]/20 text-[#D97757] flex items-center justify-center font-bold">B</span>
+              <a href="https://x.com/bcherny" target="_blank" rel="noopener" class="hover:text-[#D97757]">Boris Cherny</a>
+            </div>
+          </article>
+
+          <article class="tip-card border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-4 bg-white dark:bg-zinc-900 transition-colors" data-cat="security" data-nb="false">
+            <div class="flex flex-wrap gap-1.5 mb-2">
+              <span class="text-xs font-mono bg-green-50 dark:bg-green-950 text-green-600 dark:text-green-400 px-1.5 py-0.5 rounded">security</span>
+            </div>
+            <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-1">Prefer allowlisting over blocklisting for tool permissions</p>
+            <p class="text-xs text-zinc-500 leading-relaxed">Explicitly define which tools Claude can use rather than trying to enumerate dangerous ones. An allowlist approach is more predictable and secure.</p>
+            <div class="mt-3 flex items-center gap-1.5 text-xs text-zinc-400">
+              <span class="w-5 h-5 rounded-full bg-purple-100 dark:bg-purple-900 text-purple-600 flex items-center justify-center font-bold">T</span>
+              <a href="https://x.com/trq212" target="_blank" rel="noopener" class="hover:text-[#D97757]">Thariq Shihipar</a>
+            </div>
+          </article>
+
+          <article class="tip-card border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-4 bg-white dark:bg-zinc-900 transition-colors" data-cat="automation" data-nb="true">
+            <div class="flex flex-wrap gap-1.5 mb-2">
+              <span class="text-xs font-mono bg-violet-50 dark:bg-violet-950 text-violet-600 dark:text-violet-400 px-1.5 py-0.5 rounded">automation</span>
+              <span class="text-xs bg-red-50 dark:bg-red-950 text-red-500 px-1.5 py-0.5 rounded">🚫👶 no-babysit</span>
+            </div>
+            <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-1">Use <code class="text-xs bg-zinc-100 dark:bg-zinc-800 px-1 py-0.5 rounded font-mono">--print</code> flag for non-interactive CI pipelines</p>
+            <p class="text-xs text-zinc-500 leading-relaxed">Run Claude Code headlessly: <code class="font-mono text-xs">cc --print "your task"</code>. Suitable for scripted environments, CI/CD, and any context where interactive prompts aren't possible.</p>
+            <div class="mt-3 flex items-center gap-1.5 text-xs text-zinc-400">
+              <span class="w-5 h-5 rounded-full bg-[#D97757]/20 text-[#D97757] flex items-center justify-center font-bold">B</span>
+              <a href="https://x.com/bcherny" target="_blank" rel="noopener" class="hover:text-[#D97757]">Boris Cherny</a>
+            </div>
+          </article>
+
+          <article class="tip-card border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-4 bg-white dark:bg-zinc-900 transition-colors" data-cat="context" data-nb="false">
+            <div class="flex flex-wrap gap-1.5 mb-2">
+              <span class="text-xs font-mono bg-orange-50 dark:bg-orange-950 text-orange-600 dark:text-orange-400 px-1.5 py-0.5 rounded">context</span>
+            </div>
+            <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-1">Be explicit about what files are in scope for a task</p>
+            <p class="text-xs text-zinc-500 leading-relaxed">When asking Claude to modify code, specify which files should and shouldn't be touched. Ambiguity leads to unexpected changes in unrelated files.</p>
+            <div class="mt-3 flex items-center gap-1.5 text-xs text-zinc-400">
+              <span class="w-5 h-5 rounded-full bg-[#D97757]/20 text-[#D97757] flex items-center justify-center font-bold">B</span>
+              <a href="https://x.com/bcherny" target="_blank" rel="noopener" class="hover:text-[#D97757]">Boris Cherny</a>
+            </div>
+          </article>
+
+          <article class="tip-card border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-4 bg-white dark:bg-zinc-900 transition-colors" data-cat="git" data-nb="false">
+            <div class="flex flex-wrap gap-1.5 mb-2">
+              <span class="text-xs font-mono bg-yellow-50 dark:bg-yellow-950 text-yellow-600 dark:text-yellow-500 px-1.5 py-0.5 rounded">git</span>
+            </div>
+            <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-1">Create a new branch before starting any significant task</p>
+            <p class="text-xs text-zinc-500 leading-relaxed">Working on a dedicated branch makes it trivial to review changes, revert if needed, and keep the main branch clean. Ask Claude to do this as part of task setup.</p>
+            <div class="mt-3 flex items-center gap-1.5 text-xs text-zinc-400">
+              <span class="w-5 h-5 rounded-full bg-teal-100 dark:bg-teal-900 text-teal-600 flex items-center justify-center font-bold">L</span>
+              <a href="https://x.com/lydiahallie" target="_blank" rel="noopener" class="hover:text-[#D97757]">Lydia Hallie</a>
+            </div>
+          </article>
+
+          <article class="tip-card border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-4 bg-white dark:bg-zinc-900 transition-colors" data-cat="mcp" data-nb="true">
+            <div class="flex flex-wrap gap-1.5 mb-2">
+              <span class="text-xs font-mono bg-cyan-50 dark:bg-cyan-950 text-cyan-600 dark:text-cyan-400 px-1.5 py-0.5 rounded">mcp</span>
+              <span class="text-xs bg-red-50 dark:bg-red-950 text-red-500 px-1.5 py-0.5 rounded">🚫👶 no-babysit</span>
+            </div>
+            <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-1">Scope MCP servers to the minimal permissions required</p>
+            <p class="text-xs text-zinc-500 leading-relaxed">When configuring MCP servers, grant only the specific resource access the task requires. A Notion MCP shouldn't have write access to unrelated databases.</p>
+            <div class="mt-3 flex items-center gap-1.5 text-xs text-zinc-400">
+              <span class="w-5 h-5 rounded-full bg-[#D97757]/20 text-[#D97757] flex items-center justify-center font-bold">B</span>
+              <a href="https://x.com/bcherny" target="_blank" rel="noopener" class="hover:text-[#D97757]">Boris Cherny</a>
+            </div>
+          </article>
+
+          <article class="tip-card border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-4 bg-white dark:bg-zinc-900 transition-colors" data-cat="hooks" data-nb="true">
+            <div class="flex flex-wrap gap-1.5 mb-2">
+              <span class="text-xs font-mono bg-pink-50 dark:bg-pink-950 text-pink-600 dark:text-pink-400 px-1.5 py-0.5 rounded">hooks</span>
+              <span class="text-xs bg-red-50 dark:bg-red-950 text-red-500 px-1.5 py-0.5 rounded">🚫👶 no-babysit</span>
+            </div>
+            <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-1">Use hooks for automated behaviors, not memory or instructions</p>
+            <p class="text-xs text-zinc-500 leading-relaxed">Hooks in <code class="text-xs font-mono bg-zinc-100 dark:bg-zinc-800 px-0.5 rounded">settings.json</code> execute shell commands in response to events. They're the right place for "run linter after each edit" — not Claude's memory system.</p>
+            <div class="mt-3 flex items-center gap-1.5 text-xs text-zinc-400">
+              <span class="w-5 h-5 rounded-full bg-[#D97757]/20 text-[#D97757] flex items-center justify-center font-bold">B</span>
+              <a href="https://x.com/bcherny" target="_blank" rel="noopener" class="hover:text-[#D97757]">Boris Cherny</a>
+            </div>
+          </article>
+
+          <article class="tip-card border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-4 bg-white dark:bg-zinc-900 transition-colors" data-cat="debugging" data-nb="false">
+            <div class="flex flex-wrap gap-1.5 mb-2">
+              <span class="text-xs font-mono bg-red-50 dark:bg-red-950 text-red-600 dark:text-red-400 px-1.5 py-0.5 rounded">debugging</span>
+            </div>
+            <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-1">Paste actual error messages, not paraphrases</p>
+            <p class="text-xs text-zinc-500 leading-relaxed">Give Claude the exact error output including stack traces. Paraphrasing an error strips the precise signal Claude needs to identify the root cause accurately.</p>
+            <div class="mt-3 flex items-center gap-1.5 text-xs text-zinc-400">
+              <span class="w-5 h-5 rounded-full bg-pink-100 dark:bg-pink-900 text-pink-600 flex items-center justify-center font-bold">C</span>
+              <a href="https://x.com/_catwu" target="_blank" rel="noopener" class="hover:text-[#D97757]">Cat Wu</a>
+            </div>
+          </article>
+
+          <article class="tip-card border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-4 bg-white dark:bg-zinc-900 transition-colors" data-cat="agentic" data-nb="true">
+            <div class="flex flex-wrap gap-1.5 mb-2">
+              <span class="text-xs font-mono bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 px-1.5 py-0.5 rounded">agentic</span>
+              <span class="text-xs bg-red-50 dark:bg-red-950 text-red-500 px-1.5 py-0.5 rounded">🚫👶 no-babysit</span>
+            </div>
+            <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-1">Break long autonomous tasks into checkpoints with explicit verification steps</p>
+            <p class="text-xs text-zinc-500 leading-relaxed">For complex multi-step tasks, structure the prompt to include verification gates: "complete X, then confirm Y before proceeding to Z." This prevents error cascades in long agentic runs.</p>
+            <div class="mt-3 flex items-center gap-1.5 text-xs text-zinc-400">
+              <span class="w-5 h-5 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 flex items-center justify-center font-bold">D</span>
+              <a href="https://x.com/dexhorthy" target="_blank" rel="noopener" class="hover:text-[#D97757]">Dex Horthy</a>
+            </div>
+          </article>
+
+          <article class="tip-card border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-4 bg-white dark:bg-zinc-900 transition-colors" data-cat="prompting" data-nb="false">
+            <div class="flex flex-wrap gap-1.5 mb-2">
+              <span class="text-xs font-mono bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 px-1.5 py-0.5 rounded">prompting</span>
+            </div>
+            <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-1">State the desired outcome, not just the action</p>
+            <p class="text-xs text-zinc-500 leading-relaxed">Instead of "refactor this function", say "refactor this function so it's easier to unit test in isolation, without changing its public interface." The goal guides better decisions.</p>
+            <div class="mt-3 flex items-center gap-1.5 text-xs text-zinc-400">
+              <span class="w-5 h-5 rounded-full bg-green-100 dark:bg-green-900 text-green-600 flex items-center justify-center font-bold">D</span>
+              <a href="https://x.com/dani_avila7" target="_blank" rel="noopener" class="hover:text-[#D97757]">Dani Avila</a>
+            </div>
+          </article>
+
+          <!-- Placeholder indicator for remaining tips -->
+          <div class="border border-dashed border-[#E4E4E7] dark:border-zinc-700 rounded-lg p-4 text-center">
+            <p class="text-sm text-zinc-400">
+              <span class="font-mono text-xs bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded">+153 more tips</span>
+              — full dataset loading from <a href="https://github.com/shanraisshan/claude-code-best-practice" target="_blank" rel="noopener" class="text-[#D97757] hover:underline">source repository</a>
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="md:ml-56 border-t border-[#E4E4E7] dark:border-zinc-800 py-5 px-6">
+    <div class="max-w-[860px] mx-auto text-xs text-zinc-400">
+      Based on <a href="https://github.com/shanraisshan/claude-code-best-practice" target="_blank" rel="noopener" class="text-[#D97757] hover:underline">shanraisshan/claude-code-best-practice</a> by Shan Raisshan.
+      Original tips by authors linked per entry. Not affiliated with Anthropic.
+    </div>
+  </footer>
+
+  <script>
+    // Dark mode
+    const html = document.documentElement;
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) html.classList.add('dark');
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // Filter by category
+    let currentCat = 'all';
+    let nbOnly = false;
+
+    function filterCat(cat) {
+      currentCat = cat;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      applyFilters();
+    }
+
+    function filterNoBabysit() {
+      nbOnly = document.getElementById('nb-filter').checked;
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const q = document.getElementById('search').value.toLowerCase();
+      const cards = document.querySelectorAll('.tip-card');
+      let shown = 0;
+      cards.forEach(card => {
+        const catMatch = currentCat === 'all' || card.dataset.cat === currentCat;
+        const nbMatch = !nbOnly || card.dataset.nb === 'true';
+        const textMatch = !q || card.textContent.toLowerCase().includes(q);
+        const visible = catMatch && nbMatch && textMatch;
+        card.style.display = visible ? '' : 'none';
+        if (visible) shown++;
+      });
+      document.getElementById('count').textContent = shown;
+    }
+
+    document.getElementById('search').addEventListener('input', applyFilters);
+    document.getElementById('count').textContent = document.querySelectorAll('.tip-card').length;
+  </script>
+</body>
+</html>

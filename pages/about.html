@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About & Source — BB · Claude Code Best Practices</title>
+  <meta name="description" content="About BB — Boris Best: a curated knowledge base of Claude Code tips. Attribution, license, and source information." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { fontFamily: { sans: ['Inter','system-ui','sans-serif'], mono: ['JetBrains Mono','monospace'] }, colors: { brand: { DEFAULT: '#D97757', hover: '#B85F47' } } } }
+    }
+  </script>
+  <style>body { font-family: 'Inter', system-ui, sans-serif; } code { font-family: 'JetBrains Mono', monospace; }</style>
+</head>
+<body class="bg-[#FAFAF9] dark:bg-[#09090B] text-[#18181B] dark:text-[#FAFAFA] min-h-screen">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 left-0 right-0 z-50 h-14 border-b border-[#E4E4E7] dark:border-zinc-800 bg-[#FAFAF9]/90 dark:bg-[#09090B]/90 backdrop-blur-sm flex items-center px-4 gap-4">
+    <a href="/" class="flex items-center gap-2 shrink-0 min-w-[220px]">
+      <span class="w-7 h-7 rounded bg-[#D97757] flex items-center justify-center text-white font-bold text-sm">BB</span>
+      <span class="font-semibold text-sm hidden sm:block">Boris Best</span>
+    </a>
+    <div class="flex-1 max-w-xl mx-auto">
+      <div class="relative">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg>
+        <input type="text" placeholder="Search tips..." onkeydown="if(event.key==='Enter') window.location.href='/tips?q='+encodeURIComponent(this.value)" class="w-full pl-9 pr-4 py-1.5 text-sm rounded-md border border-[#E4E4E7] dark:border-zinc-700 bg-white dark:bg-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#D97757]/40 focus:border-[#D97757]" />
+      </div>
+    </div>
+    <button id="theme-toggle" class="w-8 h-8 rounded-md flex items-center justify-center text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+      <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path stroke-linecap="round" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </header>
+
+  <div class="pt-14 flex">
+    <!-- SIDEBAR -->
+    <aside class="hidden md:flex flex-col fixed top-14 left-0 bottom-0 w-56 border-r border-[#E4E4E7] dark:border-zinc-800 bg-[#FAFAF9] dark:bg-[#09090B] overflow-y-auto p-4">
+      <nav class="flex flex-col gap-0.5">
+        <a href="/" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Home</a>
+        <div class="mt-3 mb-1 px-3 text-xs font-semibold text-zinc-400 uppercase tracking-wider">Content</div>
+        <a href="/tips" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800"><span class="flex items-center justify-between">Tips <span class="text-xs bg-[#D97757]/10 text-[#D97757] px-1.5 py-0.5 rounded font-mono">164</span></span></a>
+        <a href="/concepts" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Concepts</a>
+        <a href="/best-practices" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Best Practices</a>
+        <a href="/reports" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Reports</a>
+        <a href="/workflows" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Workflows</a>
+        <a href="/questions" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Questions</a>
+        <div class="mt-3 mb-1 px-3 text-xs font-semibold text-zinc-400 uppercase tracking-wider">Meta</div>
+        <a href="/authors" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Authors</a>
+        <a href="/about" class="block px-3 py-1.5 rounded text-sm bg-orange-50 dark:bg-orange-950 text-[#D97757] font-medium">About & Source</a>
+        <a href="/contact" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Contact</a>
+      </nav>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="md:ml-56 flex-1 min-w-0">
+      <div class="max-w-[720px] mx-auto px-6 py-8">
+
+        <h1 class="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-6">About & Source</h1>
+
+        <!-- WHAT IS BB -->
+        <section class="mb-8">
+          <h2 class="text-base font-semibold text-zinc-900 dark:text-zinc-50 mb-3">What is BB?</h2>
+          <div class="prose prose-sm text-zinc-600 dark:text-zinc-400 space-y-3 leading-relaxed">
+            <p><strong class="text-zinc-800 dark:text-zinc-200">BB — Boris Best</strong> is a public, curated knowledge base of best practices for Claude Code. It aggregates tips, patterns, workflows, and insights from Boris Cherny (Head of Claude Code at Anthropic) and the broader Claude Code community.</p>
+            <p>The knowledge base is built on top of the open-source repository <a href="https://github.com/shanraisshan/claude-code-best-practice" target="_blank" rel="noopener" class="text-[#D97757] hover:underline">shanraisshan/claude-code-best-practice</a> curated by Shan Raisshan, which aggregates tips shared by Boris and others publicly.</p>
+            <p>BB is a module of a larger internal system called CEM (Claude Environment Manager) — this site is its public-facing layer, published as a free educational tool for developers using Claude Code daily.</p>
+          </div>
+        </section>
+
+        <!-- ATTRIBUTION -->
+        <section class="mb-8 border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-5 bg-[#F4F4F5] dark:bg-zinc-900/50">
+          <h2 class="text-base font-semibold text-zinc-900 dark:text-zinc-50 mb-3">Attribution</h2>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-4">BB aggregates content from others. Every tip, quote, and excerpt carries explicit attribution to its original author and source link. This is both an ethical and legal requirement.</p>
+          <div class="space-y-3">
+            <div class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-full bg-[#D97757]/20 text-[#D97757] flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">B</span>
+              <div>
+                <div class="text-sm font-medium text-zinc-900 dark:text-zinc-100">Boris Cherny</div>
+                <div class="text-xs text-zinc-500">Head of Claude Code, Anthropic · <a href="https://x.com/bcherny" target="_blank" rel="noopener" class="text-[#D97757] hover:underline">@bcherny</a></div>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-full bg-purple-100 dark:bg-purple-900 text-purple-600 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">T</span>
+              <div>
+                <div class="text-sm font-medium text-zinc-900 dark:text-zinc-100">Thariq Shihipar</div>
+                <div class="text-xs text-zinc-500">Anthropic · <a href="https://x.com/trq212" target="_blank" rel="noopener" class="text-[#D97757] hover:underline">@trq212</a></div>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-full bg-pink-100 dark:bg-pink-900 text-pink-600 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">C</span>
+              <div>
+                <div class="text-sm font-medium text-zinc-900 dark:text-zinc-100">Cat Wu</div>
+                <div class="text-xs text-zinc-500">Anthropic · <a href="https://x.com/_catwu" target="_blank" rel="noopener" class="text-[#D97757] hover:underline">@_catwu</a></div>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-full bg-teal-100 dark:bg-teal-900 text-teal-600 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">L</span>
+              <div>
+                <div class="text-sm font-medium text-zinc-900 dark:text-zinc-100">Lydia Hallie</div>
+                <div class="text-xs text-zinc-500">Vercel / Community · <a href="https://x.com/lydiahallie" target="_blank" rel="noopener" class="text-[#D97757] hover:underline">@lydiahallie</a></div>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">D</span>
+              <div>
+                <div class="text-sm font-medium text-zinc-900 dark:text-zinc-100">Dex Horthy</div>
+                <div class="text-xs text-zinc-500">Community · <a href="https://x.com/dexhorthy" target="_blank" rel="noopener" class="text-[#D97757] hover:underline">@dexhorthy</a></div>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900 text-green-600 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">D</span>
+              <div>
+                <div class="text-sm font-medium text-zinc-900 dark:text-zinc-100">Dani Avila</div>
+                <div class="text-xs text-zinc-500">Community · <a href="https://x.com/dani_avila7" target="_blank" rel="noopener" class="text-[#D97757] hover:underline">@dani_avila7</a></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SOURCE -->
+        <section class="mb-8">
+          <h2 class="text-base font-semibold text-zinc-900 dark:text-zinc-50 mb-3">Source Repository</h2>
+          <div class="border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-4 bg-white dark:bg-zinc-900 flex items-start gap-4">
+            <svg class="w-6 h-6 text-zinc-400 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            <div>
+              <a href="https://github.com/shanraisshan/claude-code-best-practice" target="_blank" rel="noopener" class="text-sm font-medium text-zinc-900 dark:text-zinc-100 hover:text-[#D97757] transition-colors">shanraisshan/claude-code-best-practice</a>
+              <p class="text-xs text-zinc-500 mt-0.5">Curated by Shan Raisshan · CC knowledge base foundation</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- DISCLAIMER -->
+        <section class="mb-8">
+          <h2 class="text-base font-semibold text-zinc-900 dark:text-zinc-50 mb-3">Disclaimer</h2>
+          <div class="text-sm text-zinc-600 dark:text-zinc-400 space-y-2 leading-relaxed">
+            <p>BB is an independent, community-built project. It is <strong class="text-zinc-800 dark:text-zinc-200">not affiliated with, endorsed by, or officially connected to Anthropic</strong>.</p>
+            <p>The name "Boris Best" is a working title referencing Boris Cherny, Head of Claude Code at Anthropic, whose publicly shared tips form the core of this knowledge base. Use of his name is descriptive and for attribution purposes only — it does not imply any official relationship or endorsement.</p>
+            <p>Claude Code evolves rapidly. Some tips may reference deprecated flags or workflows. Each tip links to its original source — always check the source for the most current information.</p>
+          </div>
+        </section>
+
+        <!-- CONTRIBUTING -->
+        <section class="mb-8">
+          <h2 class="text-base font-semibold text-zinc-900 dark:text-zinc-50 mb-3">Contributing</h2>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Found a tip that should be here? Spotted outdated content? The best way to contribute is through the <a href="https://github.com/shanraisshan/claude-code-best-practice" target="_blank" rel="noopener" class="text-[#D97757] hover:underline">source repository</a> or via the <a href="/contact" class="text-[#D97757] hover:underline">feedback form</a>.</p>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="md:ml-56 border-t border-[#E4E4E7] dark:border-zinc-800 py-5 px-6">
+    <div class="max-w-[720px] mx-auto text-xs text-zinc-400">
+      Based on <a href="https://github.com/shanraisshan/claude-code-best-practice" target="_blank" rel="noopener" class="text-[#D97757] hover:underline">shanraisshan/claude-code-best-practice</a> by Shan Raisshan. Not affiliated with Anthropic.
+    </div>
+  </footer>
+
+  <script>
+    const html = document.documentElement;
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) html.classList.add('dark');
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

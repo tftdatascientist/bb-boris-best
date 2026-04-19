@@ -1,0 +1,21 @@
+# BB — Boris Best
+> Claude Code Best Practices Knowledge Base
+
+A curated, public knowledge base of best practices for Claude Code, aggregated from Boris Cherny (Head of Claude Code at Anthropic) and the community.
+
+## Source
+Based on https://github.com/shanraisshan/claude-code-best-practice by Shan Raisshan.
+
+## Content
+- 164+ tips organized by category (workflow, context, security, automation, debugging, prompting, git, mcp, hooks, agentic)
+- 8 core concepts (context window, agentic loop, tool use, MCP, hooks, CLAUDE.md, headless mode, permission model)
+- 6 contributing authors with source attribution on every entry
+- Community reports, workflows, and FAQ
+
+## API Endpoints
+- /llms.txt — this file
+- /api/tips.json — machine-readable tips index (coming soon)
+- /sitemap.xml — full sitemap
+
+## Attribution
+Every tip links to its original author and source. Not affiliated with Anthropic.

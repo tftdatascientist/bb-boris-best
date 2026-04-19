@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bb-boris-best.vercel.app/sitemap.xml

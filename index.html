@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BB — Claude Code Best Practices</title>
+  <meta name="description" content="A curated knowledge base of tips, patterns, and workflows from Boris Cherny and the Claude Code community. 164+ entries, fully searchable." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              DEFAULT: '#D97757',
+              hover: '#B85F47',
+            },
+            bg: {
+              DEFAULT: '#FAFAF9',
+              section: '#F4F4F5',
+              dark: '#09090B',
+            },
+            ink: {
+              DEFAULT: '#18181B',
+              muted: '#52525B',
+              faint: '#A1A1AA',
+            },
+            border: '#E4E4E7',
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', -apple-system, system-ui, sans-serif; }
+    code, pre { font-family: 'JetBrains Mono', monospace; }
+    .sidebar-link { @apply block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors; }
+    .sidebar-link.active { @apply bg-orange-50 dark:bg-orange-950 text-brand font-medium; }
+    #sidebar { scrollbar-width: thin; scrollbar-color: #e4e4e7 transparent; }
+  </style>
+</head>
+<body class="bg-[#FAFAF9] dark:bg-[#09090B] text-[#18181B] dark:text-[#FAFAFA] min-h-screen">
+
+  <!-- TOP HEADER -->
+  <header class="fixed top-0 left-0 right-0 z-50 h-14 border-b border-[#E4E4E7] dark:border-zinc-800 bg-[#FAFAF9]/90 dark:bg-[#09090B]/90 backdrop-blur-sm flex items-center px-4 gap-4">
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2 shrink-0 min-w-[220px]">
+      <span class="w-7 h-7 rounded bg-brand flex items-center justify-center text-white font-bold text-sm">BB</span>
+      <span class="font-semibold text-sm hidden sm:block">Boris Best</span>
+    </a>
+
+    <!-- Search -->
+    <div class="flex-1 max-w-xl mx-auto">
+      <div class="relative">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg>
+        <input id="search" type="text" placeholder="Search 164+ tips, concepts, workflows..." class="w-full pl-9 pr-4 py-1.5 text-sm rounded-md border border-[#E4E4E7] dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand" />
+        <kbd class="absolute right-3 top-1/2 -translate-y-1/2 hidden sm:flex items-center gap-0.5 text-xs text-zinc-400 border border-zinc-200 dark:border-zinc-700 rounded px-1 py-0.5">⌘K</kbd>
+      </div>
+    </div>
+
+    <!-- Right controls -->
+    <div class="flex items-center gap-3 shrink-0">
+      <a href="https://github.com/shanraisshan/claude-code-best-practice" target="_blank" rel="noopener" class="hidden sm:flex items-center gap-1.5 text-sm text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-100 transition-colors">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        Source
+      </a>
+      <button id="theme-toggle" aria-label="Toggle dark mode" class="w-8 h-8 rounded-md flex items-center justify-center text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+        <svg id="icon-sun" class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path stroke-linecap="round" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg id="icon-moon" class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- LAYOUT WRAPPER -->
+  <div class="pt-14 flex">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="hidden md:flex flex-col fixed top-14 left-0 bottom-0 w-56 border-r border-[#E4E4E7] dark:border-zinc-800 bg-[#FAFAF9] dark:bg-[#09090B] overflow-y-auto p-4 gap-1">
+      <nav class="flex flex-col gap-0.5">
+        <a href="/" class="sidebar-link active">
+          <span class="flex items-center justify-between">Home</span>
+        </a>
+
+        <div class="mt-3 mb-1 px-3 text-xs font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">Content</div>
+
+        <a href="/tips" class="sidebar-link">
+          <span class="flex items-center justify-between">
+            Tips
+            <span class="text-xs bg-brand/10 text-brand px-1.5 py-0.5 rounded font-mono">164</span>
+          </span>
+        </a>
+        <a href="/concepts" class="sidebar-link">
+          <span class="flex items-center justify-between">
+            Concepts
+            <span class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-500 px-1.5 py-0.5 rounded font-mono">8</span>
+          </span>
+        </a>
+        <a href="/best-practices" class="sidebar-link">Best Practices</a>
+        <a href="/reports" class="sidebar-link">Reports</a>
+        <a href="/workflows" class="sidebar-link">Workflows</a>
+        <a href="/questions" class="sidebar-link">Questions</a>
+
+        <div class="mt-3 mb-1 px-3 text-xs font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">Meta</div>
+
+        <a href="/authors" class="sidebar-link">Authors</a>
+        <a href="/about" class="sidebar-link">About & Source</a>
+        <a href="/contact" class="sidebar-link">Contact / Feedback</a>
+      </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="md:ml-56 flex-1 min-w-0">
+      <div class="max-w-[720px] mx-auto px-6 py-10">
+
+        <!-- HERO -->
+        <section class="mb-10">
+          <div class="mb-2">
+            <span class="inline-flex items-center gap-1.5 text-xs font-mono bg-brand/10 text-brand px-2 py-1 rounded">
+              <span>●</span> Knowledge Base · Claude Code
+            </span>
+          </div>
+          <h1 class="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-zinc-50 leading-tight mb-3">
+            Claude Code<br />Best Practices
+          </h1>
+          <p class="text-zinc-500 dark:text-zinc-400 text-base leading-relaxed mb-5 max-w-xl">
+            A curated knowledge base of tips, patterns, and workflows from Boris Cherny
+            and the Claude Code community. <strong class="text-zinc-700 dark:text-zinc-300">164+ entries</strong>, fully searchable,
+            with attribution to every original author.
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <a href="/tips" class="inline-flex items-center gap-1.5 px-4 py-2 bg-brand hover:bg-brand-hover text-white text-sm font-medium rounded-md transition-colors">
+              Browse All Tips →
+            </a>
+            <a href="https://github.com/shanraisshan/claude-code-best-practice" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-4 py-2 border border-[#E4E4E7] dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 text-sm font-medium rounded-md hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              View on GitHub →
+            </a>
+          </div>
+        </section>
+
+        <!-- STATS ROW -->
+        <section class="mb-10 grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-4 bg-white dark:bg-zinc-900">
+            <div class="text-2xl font-bold text-zinc-900 dark:text-zinc-50 font-mono">164+</div>
+            <div class="text-xs text-zinc-500 mt-0.5">Tips</div>
+          </div>
+          <div class="border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-4 bg-white dark:bg-zinc-900">
+            <div class="text-2xl font-bold text-zinc-900 dark:text-zinc-50 font-mono">8</div>
+            <div class="text-xs text-zinc-500 mt-0.5">Concepts</div>
+          </div>
+          <div class="border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-4 bg-white dark:bg-zinc-900">
+            <div class="text-2xl font-bold text-zinc-900 dark:text-zinc-50 font-mono">6</div>
+            <div class="text-xs text-zinc-500 mt-0.5">Authors</div>
+          </div>
+          <div class="border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-4 bg-white dark:bg-zinc-900">
+            <div class="text-2xl font-bold text-zinc-900 dark:text-zinc-50 font-mono">15</div>
+            <div class="text-xs text-zinc-500 mt-0.5">Categories</div>
+          </div>
+        </section>
+
+        <!-- FEATURED TIPS -->
+        <section class="mb-10">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-semibold text-zinc-900 dark:text-zinc-50">Featured Tips</h2>
+            <a href="/tips" class="text-sm text-brand hover:text-brand-hover transition-colors">View all →</a>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-3">
+
+            <!-- Tip 1 -->
+            <article class="border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-4 bg-white dark:bg-zinc-900 hover:border-brand/40 transition-colors group">
+              <div class="flex items-start justify-between gap-2 mb-2">
+                <div class="flex flex-wrap gap-1.5">
+                  <span class="text-xs font-mono bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 px-1.5 py-0.5 rounded">Workflow</span>
+                  <span title="Advanced — not for beginners" class="text-xs bg-red-50 dark:bg-red-950 text-red-500 px-1.5 py-0.5 rounded">🚫👶 no-babysit</span>
+                </div>
+              </div>
+              <h3 class="font-medium text-zinc-900 dark:text-zinc-100 text-sm mb-1 group-hover:text-brand transition-colors">
+                Use /clear between unrelated tasks
+              </h3>
+              <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed mb-3">
+                Clearing context between unrelated tasks prevents cross-contamination and keeps Claude focused on the current problem.
+              </p>
+              <div class="flex items-center gap-1.5 text-xs text-zinc-400">
+                <span class="w-5 h-5 rounded-full bg-brand/20 flex items-center justify-center text-brand font-bold text-xs">B</span>
+                <span>Boris Cherny</span>
+                <span class="ml-auto font-mono text-zinc-300 dark:text-zinc-600">#workflow</span>
+              </div>
+            </article>
+
+            <!-- Tip 2 -->
+            <article class="border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-4 bg-white dark:bg-zinc-900 hover:border-brand/40 transition-colors group">
+              <div class="flex flex-wrap gap-1.5 mb-2">
+                <span class="text-xs font-mono bg-green-50 dark:bg-green-950 text-green-600 dark:text-green-400 px-1.5 py-0.5 rounded">Security</span>
+              </div>
+              <h3 class="font-medium text-zinc-900 dark:text-zinc-100 text-sm mb-1 group-hover:text-brand transition-colors">
+                Prefer allowlisting over blocklisting for tools
+              </h3>
+              <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed mb-3">
+                Explicitly allow only the tools Claude needs for a task rather than trying to block all dangerous ones. Safer and more predictable.
+              </p>
+              <div class="flex items-center gap-1.5 text-xs text-zinc-400">
+                <span class="w-5 h-5 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center text-purple-600 font-bold text-xs">T</span>
+                <span>Thariq Shihipar</span>
+                <span class="ml-auto font-mono text-zinc-300 dark:text-zinc-600">#security</span>
+              </div>
+            </article>
+
+            <!-- Tip 3 -->
+            <article class="border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-4 bg-white dark:bg-zinc-900 hover:border-brand/40 transition-colors group">
+              <div class="flex flex-wrap gap-1.5 mb-2">
+                <span class="text-xs font-mono bg-orange-50 dark:bg-orange-950 text-orange-600 dark:text-orange-400 px-1.5 py-0.5 rounded">Context</span>
+                <span class="text-xs bg-red-50 dark:bg-red-950 text-red-500 px-1.5 py-0.5 rounded">🚫👶 no-babysit</span>
+              </div>
+              <h3 class="font-medium text-zinc-900 dark:text-zinc-100 text-sm mb-1 group-hover:text-brand transition-colors">
+                CLAUDE.md is loaded automatically — use it for persistent context
+              </h3>
+              <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed mb-3">
+                Put project conventions, architecture notes, and team preferences in CLAUDE.md. Claude reads it at session start without prompting.
+              </p>
+              <div class="flex items-center gap-1.5 text-xs text-zinc-400">
+                <span class="w-5 h-5 rounded-full bg-brand/20 flex items-center justify-center text-brand font-bold text-xs">B</span>
+                <span>Boris Cherny</span>
+                <span class="ml-auto font-mono text-zinc-300 dark:text-zinc-600">#context</span>
+              </div>
+            </article>
+
+            <!-- Tip 4 -->
+            <article class="border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-4 bg-white dark:bg-zinc-900 hover:border-brand/40 transition-colors group">
+              <div class="flex flex-wrap gap-1.5 mb-2">
+                <span class="text-xs font-mono bg-violet-50 dark:bg-violet-950 text-violet-600 dark:text-violet-400 px-1.5 py-0.5 rounded">Automation</span>
+              </div>
+              <h3 class="font-medium text-zinc-900 dark:text-zinc-100 text-sm mb-1 group-hover:text-brand transition-colors">
+                Use headless mode (<code class="font-mono text-brand bg-brand/10 px-0.5 rounded">--print</code>) for CI pipelines
+              </h3>
+              <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed mb-3">
+                Run Claude Code non-interactively in scripts with <code class="font-mono">cc --print "task"</code>. Pipe output, set exit codes, integrate with any CI system.
+              </p>
+              <div class="flex items-center gap-1.5 text-xs text-zinc-400">
+                <span class="w-5 h-5 rounded-full bg-brand/20 flex items-center justify-center text-brand font-bold text-xs">B</span>
+                <span>Boris Cherny</span>
+                <span class="ml-auto font-mono text-zinc-300 dark:text-zinc-600">#automation</span>
+              </div>
+            </article>
+
+          </div>
+        </section>
+
+        <!-- CATEGORIES QUICK NAV -->
+        <section class="mb-10">
+          <h2 class="text-lg font-semibold text-zinc-900 dark:text-zinc-50 mb-4">Browse by Category</h2>
+          <div class="flex flex-wrap gap-2">
+            <a href="/tips?cat=workflow" class="px-3 py-1.5 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 hover:border-brand hover:text-brand transition-colors">workflow</a>
+            <a href="/tips?cat=context" class="px-3 py-1.5 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 hover:border-brand hover:text-brand transition-colors">context</a>
+            <a href="/tips?cat=security" class="px-3 py-1.5 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 hover:border-brand hover:text-brand transition-colors">security</a>
+            <a href="/tips?cat=automation" class="px-3 py-1.5 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 hover:border-brand hover:text-brand transition-colors">automation</a>
+            <a href="/tips?cat=debugging" class="px-3 py-1.5 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 hover:border-brand hover:text-brand transition-colors">debugging</a>
+            <a href="/tips?cat=prompting" class="px-3 py-1.5 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 hover:border-brand hover:text-brand transition-colors">prompting</a>
+            <a href="/tips?cat=git" class="px-3 py-1.5 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 hover:border-brand hover:text-brand transition-colors">git</a>
+            <a href="/tips?cat=mcp" class="px-3 py-1.5 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 hover:border-brand hover:text-brand transition-colors">mcp</a>
+            <a href="/tips?cat=hooks" class="px-3 py-1.5 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 hover:border-brand hover:text-brand transition-colors">hooks</a>
+            <a href="/tips?cat=tools" class="px-3 py-1.5 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 hover:border-brand hover:text-brand transition-colors">tools</a>
+            <a href="/tips?cat=cost" class="px-3 py-1.5 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 hover:border-brand hover:text-brand transition-colors">cost</a>
+            <a href="/tips?cat=testing" class="px-3 py-1.5 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 hover:border-brand hover:text-brand transition-colors">testing</a>
+            <a href="/tips?cat=architecture" class="px-3 py-1.5 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 hover:border-brand hover:text-brand transition-colors">architecture</a>
+            <a href="/tips?cat=performance" class="px-3 py-1.5 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 hover:border-brand hover:text-brand transition-colors">performance</a>
+            <a href="/tips?cat=agentic" class="px-3 py-1.5 text-xs font-mono border border-[#E4E4E7] dark:border-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 hover:border-brand hover:text-brand transition-colors">agentic</a>
+          </div>
+        </section>
+
+        <!-- AUTHORS STRIP -->
+        <section class="mb-10 border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-5 bg-[#F4F4F5] dark:bg-zinc-900/50">
+          <h2 class="text-sm font-semibold text-zinc-900 dark:text-zinc-50 mb-3">Contributing Authors</h2>
+          <div class="flex flex-wrap gap-2">
+            <a href="https://x.com/bcherny" target="_blank" rel="noopener" class="flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400 hover:text-brand transition-colors">
+              <span class="w-6 h-6 rounded-full bg-brand/20 text-brand flex items-center justify-center font-bold">B</span>
+              Boris Cherny
+            </a>
+            <a href="https://x.com/trq212" target="_blank" rel="noopener" class="flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400 hover:text-brand transition-colors">
+              <span class="w-6 h-6 rounded-full bg-purple-100 dark:bg-purple-900 text-purple-600 flex items-center justify-center font-bold">T</span>
+              Thariq Shihipar
+            </a>
+            <a href="https://x.com/_catwu" target="_blank" rel="noopener" class="flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400 hover:text-brand transition-colors">
+              <span class="w-6 h-6 rounded-full bg-pink-100 dark:bg-pink-900 text-pink-600 flex items-center justify-center font-bold">C</span>
+              Cat Wu
+            </a>
+            <a href="https://x.com/lydiahallie" target="_blank" rel="noopener" class="flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400 hover:text-brand transition-colors">
+              <span class="w-6 h-6 rounded-full bg-teal-100 dark:bg-teal-900 text-teal-600 flex items-center justify-center font-bold">L</span>
+              Lydia Hallie
+            </a>
+            <a href="https://x.com/dexhorthy" target="_blank" rel="noopener" class="flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400 hover:text-brand transition-colors">
+              <span class="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 flex items-center justify-center font-bold">D</span>
+              Dex Horthy
+            </a>
+            <a href="https://x.com/dani_avila7" target="_blank" rel="noopener" class="flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400 hover:text-brand transition-colors">
+              <span class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900 text-green-600 flex items-center justify-center font-bold">D</span>
+              Dani Avila
+            </a>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="md:ml-56 border-t border-[#E4E4E7] dark:border-zinc-800 py-6 px-6">
+    <div class="max-w-[720px] mx-auto text-xs text-zinc-400 dark:text-zinc-600">
+      Based on <a href="https://github.com/shanraisshan/claude-code-best-practice" target="_blank" rel="noopener" class="text-brand hover:text-brand-hover underline underline-offset-2">shanraisshan/claude-code-best-practice</a> by Shan Raisshan.
+      Original tips by authors linked per entry. Not affiliated with Anthropic.
+    </div>
+  </footer>
+
+  <script>
+    // Dark mode toggle
+    const html = document.documentElement;
+    const btn = document.getElementById('theme-toggle');
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      html.classList.add('dark');
+    }
+    btn.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // Basic search highlight (client-side, placeholder for future full-text)
+    const searchInput = document.getElementById('search');
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && searchInput.value.trim()) {
+        window.location.href = '/tips?q=' + encodeURIComponent(searchInput.value.trim());
+      }
+    });
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        searchInput.focus();
+      }
+    });
+  </script>
+</body>
+</html>

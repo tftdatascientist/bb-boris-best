@@ -1,0 +1,15 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/tips", "destination": "/pages/tips.html" },
+    { "source": "/concepts", "destination": "/pages/concepts.html" },
+    { "source": "/best-practices", "destination": "/pages/best-practices.html" },
+    { "source": "/reports", "destination": "/pages/reports.html" },
+    { "source": "/workflows", "destination": "/pages/workflows.html" },
+    { "source": "/questions", "destination": "/pages/questions.html" },
+    { "source": "/authors", "destination": "/pages/authors.html" },
+    { "source": "/about", "destination": "/pages/about.html" },
+    { "source": "/contact", "destination": "/pages/contact.html" }
+  ]
+}

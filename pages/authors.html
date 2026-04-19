@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Authors — BB · Claude Code Best Practices</title>
+  <meta name="description" content="Meet the authors behind the Claude Code tips in the BB knowledge base." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script>tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{sans:['Inter','system-ui','sans-serif'],mono:['JetBrains Mono','monospace']},colors:{brand:{DEFAULT:'#D97757'}}}}}</script>
+  <style>body{font-family:'Inter',system-ui,sans-serif;}</style>
+</head>
+<body class="bg-[#FAFAF9] dark:bg-[#09090B] text-[#18181B] dark:text-[#FAFAFA] min-h-screen">
+  <header class="fixed top-0 left-0 right-0 z-50 h-14 border-b border-[#E4E4E7] dark:border-zinc-800 bg-[#FAFAF9]/90 dark:bg-[#09090B]/90 backdrop-blur-sm flex items-center px-4 gap-4">
+    <a href="/" class="flex items-center gap-2 shrink-0 min-w-[220px]"><span class="w-7 h-7 rounded bg-[#D97757] flex items-center justify-center text-white font-bold text-sm">BB</span><span class="font-semibold text-sm hidden sm:block">Boris Best</span></a>
+    <div class="flex-1 max-w-xl mx-auto"><div class="relative"><svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg><input type="text" placeholder="Search tips..." onkeydown="if(event.key==='Enter')window.location.href='/tips?q='+encodeURIComponent(this.value)" class="w-full pl-9 pr-4 py-1.5 text-sm rounded-md border border-[#E4E4E7] dark:border-zinc-700 bg-white dark:bg-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#D97757]/40"/></div></div>
+    <button id="theme-toggle" class="w-8 h-8 rounded-md flex items-center justify-center text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"><svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path stroke-linecap="round" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg><svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+  </header>
+  <div class="pt-14 flex">
+    <aside class="hidden md:flex flex-col fixed top-14 left-0 bottom-0 w-56 border-r border-[#E4E4E7] dark:border-zinc-800 bg-[#FAFAF9] dark:bg-[#09090B] overflow-y-auto p-4">
+      <nav class="flex flex-col gap-0.5">
+        <a href="/" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Home</a>
+        <div class="mt-3 mb-1 px-3 text-xs font-semibold text-zinc-400 uppercase tracking-wider">Content</div>
+        <a href="/tips" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800"><span class="flex items-center justify-between">Tips<span class="text-xs bg-[#D97757]/10 text-[#D97757] px-1.5 py-0.5 rounded font-mono">164</span></span></a>
+        <a href="/concepts" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Concepts</a>
+        <a href="/best-practices" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Best Practices</a>
+        <a href="/reports" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Reports</a>
+        <a href="/workflows" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Workflows</a>
+        <a href="/questions" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Questions</a>
+        <div class="mt-3 mb-1 px-3 text-xs font-semibold text-zinc-400 uppercase tracking-wider">Meta</div>
+        <a href="/authors" class="block px-3 py-1.5 rounded text-sm bg-orange-50 dark:bg-orange-950 text-[#D97757] font-medium">Authors</a>
+        <a href="/about" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">About & Source</a>
+        <a href="/contact" class="block px-3 py-1.5 rounded text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">Contact</a>
+      </nav>
+    </aside>
+    <main class="md:ml-56 flex-1 min-w-0">
+      <div class="max-w-[720px] mx-auto px-6 py-8">
+        <h1 class="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">Authors</h1>
+        <p class="text-sm text-zinc-500 mb-8">Every tip in BB carries attribution to its original author. These are the people whose public tips and insights form the core of this knowledge base.</p>
+        <div class="space-y-4">
+
+          <div class="border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-5 bg-white dark:bg-zinc-900">
+            <div class="flex items-start gap-4">
+              <span class="w-12 h-12 rounded-full bg-[#D97757]/20 text-[#D97757] flex items-center justify-center font-bold text-xl shrink-0">B</span>
+              <div class="flex-1">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h2 class="text-base font-semibold text-zinc-900 dark:text-zinc-50">Boris Cherny</h2>
+                  <a href="https://x.com/bcherny" target="_blank" rel="noopener" class="text-xs font-mono text-zinc-400 hover:text-[#D97757]">@bcherny</a>
+                </div>
+                <p class="text-xs text-zinc-500 mb-2">Head of Claude Code, Anthropic</p>
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Boris Cherny leads Claude Code at Anthropic. The majority of tips in this knowledge base originate from his public posts, documentation contributions, and direct guidance on Claude Code usage patterns.</p>
+                <div class="mt-3 flex gap-2">
+                  <a href="/tips?author=boris" class="text-xs px-2 py-1 bg-[#D97757]/10 text-[#D97757] rounded font-mono hover:bg-[#D97757]/20 transition-colors">~120 tips</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-5 bg-white dark:bg-zinc-900">
+            <div class="flex items-start gap-4">
+              <span class="w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-900 text-purple-600 flex items-center justify-center font-bold text-xl shrink-0">T</span>
+              <div class="flex-1">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h2 class="text-base font-semibold text-zinc-900 dark:text-zinc-50">Thariq Shihipar</h2>
+                  <a href="https://x.com/trq212" target="_blank" rel="noopener" class="text-xs font-mono text-zinc-400 hover:text-[#D97757]">@trq212</a>
+                </div>
+                <p class="text-xs text-zinc-500 mb-2">Anthropic</p>
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Thariq's contributions focus on security patterns, permission models, and safe usage of Claude Code in production environments.</p>
+                <div class="mt-3 flex gap-2">
+                  <a href="/tips?author=thariq" class="text-xs px-2 py-1 bg-purple-100 dark:bg-purple-950 text-purple-600 rounded font-mono hover:bg-purple-200 dark:hover:bg-purple-900 transition-colors">~18 tips</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-5 bg-white dark:bg-zinc-900">
+            <div class="flex items-start gap-4">
+              <span class="w-12 h-12 rounded-full bg-pink-100 dark:bg-pink-900 text-pink-600 flex items-center justify-center font-bold text-xl shrink-0">C</span>
+              <div class="flex-1">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h2 class="text-base font-semibold text-zinc-900 dark:text-zinc-50">Cat Wu</h2>
+                  <a href="https://x.com/_catwu" target="_blank" rel="noopener" class="text-xs font-mono text-zinc-400 hover:text-[#D97757]">@_catwu</a>
+                </div>
+                <p class="text-xs text-zinc-500 mb-2">Anthropic</p>
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Cat's tips cover debugging approaches, effective communication patterns with Claude, and practical day-to-day developer workflows.</p>
+                <div class="mt-3 flex gap-2">
+                  <a href="/tips?author=cat" class="text-xs px-2 py-1 bg-pink-100 dark:bg-pink-950 text-pink-600 rounded font-mono hover:bg-pink-200 dark:hover:bg-pink-900 transition-colors">~12 tips</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-5 bg-white dark:bg-zinc-900">
+            <div class="flex items-start gap-4">
+              <span class="w-12 h-12 rounded-full bg-teal-100 dark:bg-teal-900 text-teal-600 flex items-center justify-center font-bold text-xl shrink-0">L</span>
+              <div class="flex-1">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h2 class="text-base font-semibold text-zinc-900 dark:text-zinc-50">Lydia Hallie</h2>
+                  <a href="https://x.com/lydiahallie" target="_blank" rel="noopener" class="text-xs font-mono text-zinc-400 hover:text-[#D97757]">@lydiahallie</a>
+                </div>
+                <p class="text-xs text-zinc-500 mb-2">Developer Educator</p>
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Lydia contributes tips from a developer education perspective, focusing on git workflows, code review patterns, and making Claude Code accessible to teams.</p>
+                <div class="mt-3 flex gap-2">
+                  <a href="/tips?author=lydia" class="text-xs px-2 py-1 bg-teal-100 dark:bg-teal-950 text-teal-600 rounded font-mono hover:bg-teal-200 dark:hover:bg-teal-900 transition-colors">~8 tips</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-5 bg-white dark:bg-zinc-900">
+            <div class="flex items-start gap-4">
+              <span class="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 flex items-center justify-center font-bold text-xl shrink-0">D</span>
+              <div class="flex-1">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h2 class="text-base font-semibold text-zinc-900 dark:text-zinc-50">Dex Horthy</h2>
+                  <a href="https://x.com/dexhorthy" target="_blank" rel="noopener" class="text-xs font-mono text-zinc-400 hover:text-[#D97757]">@dexhorthy</a>
+                </div>
+                <p class="text-xs text-zinc-500 mb-2">Community</p>
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Dex's contributions focus on agentic patterns, multi-step task orchestration, and autonomous Claude Code workflows for complex engineering tasks.</p>
+                <div class="mt-3 flex gap-2">
+                  <a href="/tips?author=dex" class="text-xs px-2 py-1 bg-blue-100 dark:bg-blue-950 text-blue-600 rounded font-mono hover:bg-blue-200 dark:hover:bg-blue-900 transition-colors">~4 tips</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="border border-[#E4E4E7] dark:border-zinc-800 rounded-lg p-5 bg-white dark:bg-zinc-900">
+            <div class="flex items-start gap-4">
+              <span class="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900 text-green-600 flex items-center justify-center font-bold text-xl shrink-0">D</span>
+              <div class="flex-1">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h2 class="text-base font-semibold text-zinc-900 dark:text-zinc-50">Dani Avila</h2>
+                  <a href="https://x.com/dani_avila7" target="_blank" rel="noopener" class="text-xs font-mono text-zinc-400 hover:text-[#D97757]">@dani_avila7</a>
+                </div>
+                <p class="text-xs text-zinc-500 mb-2">Community</p>
+                <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Dani's tips cover prompting techniques, outcome-oriented instructions, and practical approaches to getting consistent results from Claude Code.</p>
+                <div class="mt-3 flex gap-2">
+                  <a href="/tips?author=dani" class="text-xs px-2 py-1 bg-green-100 dark:bg-green-950 text-green-600 rounded font-mono hover:bg-green-200 dark:hover:bg-green-900 transition-colors">~2 tips</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+  <footer class="md:ml-56 border-t border-[#E4E4E7] dark:border-zinc-800 py-5 px-6">
+    <div class="max-w-[720px] mx-auto text-xs text-zinc-400">Based on <a href="https://github.com/shanraisshan/claude-code-best-practice" target="_blank" rel="noopener" class="text-[#D97757] hover:underline">shanraisshan/claude-code-best-practice</a> by Shan Raisshan. Not affiliated with Anthropic.</div>
+  </footer>
+  <script>const html=document.documentElement;const saved=localStorage.getItem('theme');if(saved==='dark'||(!saved&&window.matchMedia('(prefers-color-scheme: dark)').matches))html.classList.add('dark');document.getElementById('theme-toggle').addEventListener('click',()=>{html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');});</script>
+</body>
+</html>

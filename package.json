@@ -1,0 +1,12 @@
+{
+  "name": "bb-boris-best",
+  "version": "0.1.0",
+  "description": "Claude Code Best Practices — curated knowledge base",
+  "scripts": {
+    "dev": "npx serve . -p 3000",
+    "build": "echo 'Static site — no build step'",
+    "preview": "npx serve . -p 4000"
+  },
+  "keywords": ["claude-code", "best-practices", "knowledge-base"],
+  "license": "MIT"
+}
